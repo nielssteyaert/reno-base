@@ -1,0 +1,27 @@
+name: Renovation Budget
+version: "0.1.0"
+slug: reno_budget
+description: Track your home renovation budget, expenses, payments and milestones.
+url: https://github.com/nielssteyaert/reno-base
+arch:
+  - aarch64
+  - amd64
+init: false
+startup: application
+boot: auto
+ingress: true
+ingress_port: 8099
+ingress_stream: true
+panel_icon: mdi:home-edit
+panel_title: Renovation
+backup: cold
+backup_exclude:
+  - "backups/*"
+options:
+  log_level: info
+  auto_backup: true
+  backup_keep: 14
+schema:
+  log_level: list(trace|debug|info|notice|warning|error|fatal)
+  auto_backup: bool
+  backup_keep: int(1,365)

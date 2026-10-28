@@ -1,0 +1,14 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "reno-budget",
+      "runtimeExecutable": "bash",
+      "runtimeArgs": [
+        "-c",
+        "cd reno_budget/backend && RENO_DEV=1 RENO_DATA_DIR=.devdata RENO_STATIC_DIR=../frontend/dist exec .venv/bin/uvicorn app.main:app --host 127.0.0.1 --port 8099"
+      ],
+      "port": 8099
+    }
+  ]
+}

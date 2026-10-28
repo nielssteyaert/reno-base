@@ -1,0 +1,10 @@
+configuration:
+  log_level:
+    name: Log level
+    description: How much detail the app writes to its log.
+  auto_backup:
+    name: Nightly backup
+    description: Create a backup of the database and attachments every night at 03:00.
+  backup_keep:
+    name: Backups to keep
+    description: Number of automatic backups kept in the app's backup folder. Older ones are removed.

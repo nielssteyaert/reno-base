@@ -1,0 +1,426 @@
+/* Layout and chart tokens. PrimeVue (Aura) themes the components; these cover the rest. */
+
+:root {
+  --page-bg: #f6f7f8;
+  --surface: #ffffff;
+  --surface-sunken: #f1f2f4;
+  --border: rgba(11, 11, 11, 0.1);
+  --text: #0b0b0b;
+  --text-2: #52514e;
+  --text-muted: #6f6d68;
+  --grid: #e1e0d9;
+  --baseline: #c3c2b7;
+  --nav-active: rgba(2, 132, 199, 0.1);
+
+  /* Budget stack: ordinal blue ramp, paid (darkest) → estimated (lightest). */
+  --stack-paid: #104281;
+  --stack-outstanding: #256abf;
+  --stack-quoted: #5598e7;
+  --stack-estimated: #86b6ef;
+  --budget-marker: #0b0b0b;
+
+  /* Categorical series for time charts. */
+  --series-1: #2a78d6;
+  --series-2: #eb6834;
+
+  /* Status: always paired with an icon and a label. */
+  --status-good: #0ca30c;
+  --status-warning: #fab219;
+  --status-critical: #d03b3b;
+  --status-good-text: #006300;
+  --status-warning-text: #8a5a00;
+  --status-critical-text: #b42f2f;
+
+  --radius: 10px;
+  --sidebar-width: 232px;
+  font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  color: var(--text);
+  background: var(--page-bg);
+}
+
+:root.app-dark {
+  --page-bg: #0d0d0d;
+  --surface: #1a1a19;
+  --surface-sunken: #222221;
+  --border: rgba(255, 255, 255, 0.1);
+  --text: #f0efec;
+  --text-2: #c3c2b7;
+  --text-muted: #9a988f;
+  --grid: #2c2c2a;
+  --baseline: #383835;
+  --nav-active: rgba(56, 189, 248, 0.14);
+
+  --stack-paid: #9ec5f4;
+  --stack-outstanding: #5598e7;
+  --stack-quoted: #2a78d6;
+  --stack-estimated: #184f95;
+  --budget-marker: #f0efec;
+
+  --series-1: #3987e5;
+  --series-2: #d95926;
+
+  --status-good-text: #0ca30c;
+  --status-warning-text: #fab219;
+  --status-critical-text: #e66767;
+  color-scheme: dark;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  min-height: 100%;
+  background: var(--page-bg);
+  font-size: 14px;
+}
+
+a {
+  color: var(--p-primary-color);
+}
+
+/* ---- App shell ---- */
+
+.shell {
+  display: grid;
+  grid-template-columns: var(--sidebar-width) 1fr;
+  min-height: 100vh;
+}
+
+.sidebar {
+  background: var(--surface);
+  border-right: 1px solid var(--border);
+  padding: 16px 12px;
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  overflow-y: auto;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 4px 8px 16px;
+  font-weight: 650;
+  font-size: 15px;
+}
+
+.brand i {
+  font-size: 20px;
+  color: var(--p-primary-color);
+}
+
+.nav-group {
+  margin-bottom: 14px;
+}
+
+.nav-group-title {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--text-muted);
+  padding: 4px 10px;
+}
+
+.nav-link {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 10px;
+  border-radius: 8px;
+  color: var(--text-2);
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.nav-link:hover {
+  background: var(--surface-sunken);
+  color: var(--text);
+}
+
+.nav-link.router-link-exact-active,
+.nav-link.active {
+  background: var(--nav-active);
+  color: var(--p-primary-color);
+}
+
+.main {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.topbar {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 24px;
+  border-bottom: 1px solid var(--border);
+  background: var(--surface);
+  position: sticky;
+  top: 0;
+  z-index: 5;
+}
+
+.topbar h1 {
+  font-size: 18px;
+  margin: 0;
+  font-weight: 650;
+}
+
+.topbar .project {
+  color: var(--text-muted);
+  font-size: 13px;
+}
+
+.topbar .spacer {
+  flex: 1;
+}
+
+.menu-toggle {
+  display: none !important;
+}
+
+.content {
+  padding: 20px 24px 48px;
+  max-width: 1440px;
+  width: 100%;
+}
+
+@media (max-width: 900px) {
+  .shell {
+    grid-template-columns: 1fr;
+  }
+  .sidebar {
+    position: fixed;
+    inset: 0 auto 0 0;
+    width: 260px;
+    z-index: 20;
+    transform: translateX(-100%);
+    transition: transform 0.2s ease;
+    box-shadow: 0 0 24px rgba(0, 0, 0, 0.2);
+  }
+  .sidebar.open {
+    transform: translateX(0);
+  }
+  .menu-toggle {
+    display: inline-flex !important;
+  }
+  .topbar,
+  .content {
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+}
+
+/* ---- Building blocks ---- */
+
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 16px 18px;
+}
+
+.card h2,
+.section-title {
+  font-size: 15px;
+  font-weight: 650;
+  margin: 0 0 12px;
+}
+
+.card-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.card-head h2 {
+  margin: 0;
+}
+
+.grid {
+  display: grid;
+  gap: 16px;
+}
+
+.grid > *,
+.stack > * {
+  min-width: 0;
+}
+
+.grid-2 {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.grid-3 {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+@media (max-width: 1100px) {
+  .grid-2,
+  .grid-3 {
+    grid-template-columns: 1fr;
+  }
+}
+
+.kpis {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+  gap: 12px;
+}
+
+.toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.toolbar .spacer {
+  flex: 1;
+}
+
+.muted {
+  color: var(--text-muted);
+}
+
+.small {
+  font-size: 12px;
+}
+
+.num {
+  font-variant-numeric: tabular-nums;
+  text-align: right;
+  white-space: nowrap;
+}
+
+.stack {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.empty {
+  text-align: center;
+  color: var(--text-muted);
+  padding: 32px 16px;
+}
+
+.empty i {
+  font-size: 28px;
+  display: block;
+  margin-bottom: 8px;
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px 16px;
+}
+
+.form-grid .full {
+  grid-column: 1 / -1;
+}
+
+@media (max-width: 640px) {
+  .form-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-width: 0;
+}
+
+.field > label {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-2);
+}
+
+.field .hint {
+  font-size: 12px;
+  color: var(--text-muted);
+}
+
+.swatch {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  border-radius: 3px;
+  flex: none;
+}
+
+/* Legend for the budget stack */
+.legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 16px;
+  font-size: 12px;
+  color: var(--text-2);
+}
+
+.legend span {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.legend .marker {
+  width: 2px;
+  height: 12px;
+  background: var(--budget-marker);
+  border-radius: 1px;
+}
+
+/* Health pill: icon + label + colour, never colour alone */
+.health {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 12px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.health.ok {
+  color: var(--status-good-text);
+}
+.health.warning {
+  color: var(--status-warning-text);
+}
+.health.over {
+  color: var(--status-critical-text);
+}
+.health.none {
+  color: var(--text-muted);
+}
+
+.p-datatable .p-datatable-tbody > tr.row-clickable {
+  cursor: pointer;
+}
+
+.p-drawer.expense-drawer {
+  width: min(760px, 100vw) !important;
+}
+
+.p-tabpanels {
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+}
